@@ -1,6 +1,6 @@
 import hashlib
 
-class DictHashCracker():
+class SaltedDictHashCracker():
 
     _hashDict = {}
     _passwords = []
@@ -21,7 +21,7 @@ class DictHashCracker():
         
         raise Exception('Hash has not been found in the hash dictionary.', hash)
 
-    def AttemptBruteForce(self,hash):
+    def AttemptBruteForce(self,hash, salt):
         lookupAttempt = self.LookupHash(hash) 
 
         if lookupAttempt != '':
@@ -29,7 +29,7 @@ class DictHashCracker():
         
         for password in self._passwords:
             h = hashlib.new('sha256')
-            encoded = password.encode()
+            encoded = password.encode() + salt.encode() 
             h.update(encoded)
             hashedPw = h.hexdigest()
             if (hash == hashedPw):

@@ -1,12 +1,12 @@
 from HashCrackers.BruteForceHashCracker import BruteForceHashCracker
 from HashCrackers.DictHashCracker import DictHashCracker
+from HashCrackers.SaltedDictHashCracker import SaltedDictHashCracker
 
 def Read(path):
         fileObj = open(path, "r")
         content = fileObj.read().splitlines()
         fileObj.close()
         return content
-
 
 if __name__ == '__main__':
     hashes = Read('hashes/hashes.txt')
@@ -36,4 +36,9 @@ if __name__ == '__main__':
     ('e6ec51a2ef933920ac1e6d3d8ba6ffac77fe94bfb79518b03cd9b94a14e97d3e','defb64a3'),
     ('fbecd00c62b01135f9e588883e80f2710a354c0eb73a33a2c5ab5602cc85f6ad','017bb5b7')]
     
+    hashes = [x[0] for x in saltedHashes]
+
+    saltedHashCracker = SaltedDictHashCracker(hashes, passwords)
+    for saltedDictHash in saltedHashes:
+        saltedHashCracker.AttemptBruteForce(saltedDictHash[0], saltedDictHash[1])
 
