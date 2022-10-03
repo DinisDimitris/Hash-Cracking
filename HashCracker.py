@@ -1,11 +1,11 @@
 import hashlib
-from itertools import combinations_with_replacement
 from itertools import product
 
 class BruteForceHashCracker(object):
 
     CHARS = 'abcdefghijklmnopqrstuvwxyz0123456789'
-    PERMUTATION_DEPTH = len(CHARS)
+    #adjust permutation depth so that memory doesnt blow up if ran locally
+    PERMUTATION_DEPTH = 5
 
     @staticmethod
     def ReadHashes(path):
@@ -16,7 +16,7 @@ class BruteForceHashCracker(object):
 
     @staticmethod
     def words(letters):
-        for n in range(1, len(letters)+1):
+        for n in range(1, BruteForceHashCracker.PERMUTATION_DEPTH):
            yield from map(''.join, product(letters, repeat=n))
 
     @staticmethod
@@ -31,4 +31,4 @@ class BruteForceHashCracker(object):
                     print("Hash: " + hashToBeCracked +  " has been cracked, password is: " + password)
                     return
 
-        print('Hash: ' + hashToBeCracked + ' could not be cracked for permutation depth = ' + str(BruteForceHashCracker.PERMUTATION_DEPTH))
+        print('Hash: ' + hashToBeCracked + ' could not be found for permutation depth = ' + str(BruteForceHashCracker.PERMUTATION_DEPTH))
