@@ -7,3 +7,6 @@ C-impl/HashCrackers/permute.o
 C-impl/HashCrackers/sha256/main
 C-impl/HashCrackers/sha256/sha256_test.o
 C-impl/HashCrackers/sha256/sha256.o
+C-impl/permute.o
+C-impl/a.out
+C-impl/BruteForceHashCracking.o
