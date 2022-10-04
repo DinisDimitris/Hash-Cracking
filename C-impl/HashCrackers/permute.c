@@ -1,71 +1,41 @@
-// C program to print all permutations with repetition
-// of characters
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
- 
-/* Following function is used by the library qsort() function
-  to sort an array of chars */
-int compare (const void * a, const void * b);
- 
-/* The main function that recursively prints all repeated
-   permutations of  the given string. It uses data[] to store all
-   permutations one by one */
-void allLexicographicRecur (char *str, char* data, int last, int index)
-{
-    int i, len = strlen(str);
- 
-    // One by one fix all characters at the given index and recur for
-    // the/ subsequent indexes
-    for ( i=0; i<len; i++ )
-    {
-        // Fix the ith character at index and if this is not the last
-        // index then recursively call for higher indexes
-        data[index] = str[i] ;
- 
-        // If this is the last index then print the string stored in
-        // data[]
-        if (index == last)
-            printf("%s\n", data);
-        else // Recur for higher indexes
-            allLexicographicRecur (str, data, last, index+1);
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "sha256/sha256.h"
+
+int printAllKLengthRec(char const* alphabet, char* prefix, char const* password,
+                       size_t alphabetLen, size_t passwordLen, size_t k) {
+    if (k == 0) {
+        printf("%s\n", prefix);
+        return (strncmp(prefix, password, passwordLen) == 0);
     }
+
+    int found = 0;
+    for (size_t i = 0; i < alphabetLen; ++i) {
+        prefix[passwordLen - k] = alphabet[i];
+        found = printAllKLengthRec(alphabet, prefix, password, alphabetLen, passwordLen, k - 1);
+        if (found) break;
+    }
+
+    return found;
 }
- 
-/* This function sorts input string, allocate memory for data (needed
-   for allLexicographicRecur()) and calls allLexicographicRecur() for
-   printing all  permutations */
-void allLexicographic(char *str)
-{
-    int len = strlen (str) ;
- 
-    // Create a temp array that will be used by allLexicographicRecur()
-    char *data = (char *) malloc (sizeof(char) * (len + 1)) ;
-    data[len] = '\0';
- 
-    // Sort the input string so that we get all output strings in
-    // lexicographically sorted order
-    qsort(str, len, sizeof(char), compare);
- 
-    // Now print all permutations
-    allLexicographicRecur (str, data, len-1, 0);
- 
-    // Free data to avoid memory leak
-    free(data);
-}
- 
-// Needed for library function qsort()
-int compare (const void * a, const void * b)
-{
-    return ( *(char *)a - *(char *)b );
-}
- 
-// Driver program to test above functions
-int main()
-{
-    char str[] = "abcd";
-    printf("All permutations with repetition of %s are: \n",
-            str);
-    allLexicographic(str);
-    return 0;
+
+const int bufsize = 256;
+
+int main() {
+    char alphabet[] = "abcd";
+    char password[] = "594e519ae499312b29433b7dd8a97ff068defcba9755b6d5d00e84c524d67b06";
+    
+    int len = 0;
+    len = strlen(alphabet);
+
+    /* Use a buffer to avoid messing with malloc() in printAllKLengthRec */
+    char prefix[bufsize];
+    memset(prefix, '\0', bufsize);
+
+    size_t const alphalen = strlen(alphabet);
+
+    for (int i = 0; i < len; i++){
+        printAllKLengthRec(alphabet, prefix, password, alphalen, i, i);
+    }
 }
