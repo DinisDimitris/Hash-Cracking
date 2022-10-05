@@ -12,13 +12,9 @@ class DictHashCracker():
         self._passwords = passwords
 
     def LookupHash(self,hash):
-        for hashKey in self._hashDict:
-            if (hash == hashKey):
-                if (self._hashDict[hashKey] != ''):
-                    print('Password for hash: ' + hash +  ' is: ' + self._hashDict[hashKey])
-                    return self._hashDict[hashKey]
+        print('Password for hash: ' + hash +  ' is: ' + self._hashDict[hash])
+        return self._hashDict[hash]
         
-        raise Exception('Hash has not been found in the hash dictionary.', hash)
 
     def StoreHashes(self):
         for password in self._passwords:
