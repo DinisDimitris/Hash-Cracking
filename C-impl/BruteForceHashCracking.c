@@ -86,7 +86,7 @@ int main()
 
     int len = strlen(alphabet);
 
-    /* Use a buffer to avoid messing with malloc() in printAllKLengthRec */
+    /* Use a buffer to avoid messing with malloc() in kWordsRecursive */
     char prefix[bufsize];
     memset(prefix, '\0', bufsize);
 
