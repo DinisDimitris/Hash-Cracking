@@ -22,7 +22,10 @@ if __name__ == '__main__':
     dictHashCracker = DictHashCracker(dictHashes, passwords)
 
     for dictHash in dictHashes:
-        dictHashCracker.AttemptBruteForce(dictHash)
+        dictHashCracker.StoreHashes()
+
+    for dictHash in dictHashes:
+        dictHashCracker.LookupHash(dictHash)
 
     print ('\nSalted Dictionary attack\n ---------------------')
     saltedHashes = [('915edb4d39ab6d260e3fb7269f5d9f8cfba3fdc998415298af3e6eb94a82e43e','27fb57e9'),
@@ -40,5 +43,9 @@ if __name__ == '__main__':
 
     saltedHashCracker = SaltedDictHashCracker(hashes, passwords)
     for saltedDictHash in saltedHashes:
-        saltedHashCracker.AttemptBruteForce(saltedDictHash[0], saltedDictHash[1])
+        saltedHashCracker.StorePasswordWithSalt(saltedDictHash[1])
+
+    for saltedDictHash in saltedHashes:
+        saltedHashCracker.LookupSaltedHash(saltedDictHash[0])
+    
 
