@@ -13,3 +13,9 @@ C-impl/BruteForceHashCracking.o
 .vscode
 __pycache__
 C-impl/bruteForce
+C-impl/bruteforce
+C-impl/dictcracker
+C-impl/dictcracker
+C-impl/dictcracker
+C-impl/DictHashCracker.o
+C-impl/dictcracker

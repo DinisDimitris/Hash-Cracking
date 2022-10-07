@@ -12,7 +12,10 @@ class SaltedDictHashCracker():
         self._passwords = passwords
 
     def LookupSaltedHash(self,hash):
-        print('Password for hash: ' + hash +  ' is: ' + self._hashDict[hash][0])
+        if (self._hashDict[hash] != ''):
+            print('Password for hash: ' + hash +  ' is: ' + self._hashDict[hash][0])
+        else:
+            print('Password for hash: ' + hash +  ' is not present in the dictionary')
         return self._hashDict[hash]
 
     def StorePasswordWithSalt(self, salt):
