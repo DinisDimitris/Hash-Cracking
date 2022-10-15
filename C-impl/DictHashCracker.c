@@ -6,7 +6,7 @@
 
 #define MAX_LINE_LENGTH 100
 #define MAX_KEYS_AMOUNT 6940 /* size of PassworDictionary.txt */
-#define MAX_KEY_LENGTH 30 /* let each string have a size of max 20 characters */
+#define MAX_KEY_LENGTH 20 /* let each string have a size of max 20 characters */
 
 typedef struct hashdict {
     char key[65];            /* we'll use this field as the key */
@@ -69,7 +69,7 @@ int main()
     fclose(textfile);
 
     for(size_t i =0; i < (sizeof(keys)/sizeof(keys[0])); i++) {
-        //printf("adding key %s\n", keys[i]);
+        //printf("adding key %s\n", keys[i]); takes O(n)
         item = (hashdict*)malloc(sizeof(hashdict));
         if (item == NULL) {
             exit(-1);

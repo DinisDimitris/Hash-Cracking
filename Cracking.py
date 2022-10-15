@@ -1,6 +1,7 @@
 from HashCrackers.BruteForceHashCracker import BruteForceHashCracker
 from HashCrackers.DictHashCracker import DictHashCracker
 from HashCrackers.SaltedDictHashCracker import SaltedDictHashCracker
+import time
 
 def Read(path):
         fileObj = open(path, "r")
@@ -11,21 +12,29 @@ def Read(path):
 if __name__ == '__main__':
     hashes = Read('hashes/hashes.txt')
 
+    start = time.time()
     print ('Brute force hash cracker\n ---------------------')
     for hash in hashes:
         BruteForceHashCracker.AttemptBruteForce(hash)
+    end = time.time()
+    print ("Execution time: {}".format(end - start))
 
     dictHashes = Read('hashes/dicthashes.txt')
     passwords = Read('hashes/PasswordDictionary.txt')
 
+    start = time.time()
     print ('\nDictionary attack\n ---------------------')
     dictHashCracker = DictHashCracker(dictHashes, passwords)
+    
 
     for dictHash in dictHashes:
         dictHashCracker.StoreHashes()
 
     for dictHash in dictHashes:
         dictHashCracker.LookupHash(dictHash)
+
+    end = time.time()
+    print ("Execution time: {}".format(end - start))
 
     print ('\nSalted Dictionary attack\n ---------------------')
     saltedHashes = [('915edb4d39ab6d260e3fb7269f5d9f8cfba3fdc998415298af3e6eb94a82e43e','27fb57e9'),
@@ -41,11 +50,15 @@ if __name__ == '__main__':
     
     hashes = [x[0] for x in saltedHashes]
 
+    start = time.time()
     saltedHashCracker = SaltedDictHashCracker(hashes, passwords)
     for saltedDictHash in saltedHashes:
         saltedHashCracker.StorePasswordWithSalt(saltedDictHash[1])
 
     for saltedDictHash in saltedHashes:
         saltedHashCracker.LookupSaltedHash(saltedDictHash[0])
+
+    end = time.time()
+    print ("Execution time: {}".format(end - start))
     
 
