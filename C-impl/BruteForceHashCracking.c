@@ -4,6 +4,12 @@
 #include <time.h>
 #include "sha256/sha256.h"
 
+const int BUFSIZE = 256;
+
+/* set to 1 if you wanna save exec time to txt
+first column is for the password list length and second for their respective time to crack*/
+const int SAVE_OUT = 0;
+
 void PrintHex(BYTE buf[SHA256_BLOCK_SIZE])
 {
     printf("Encoding: ");
@@ -28,7 +34,8 @@ int CheckHash(BYTE buf[SHA256_BLOCK_SIZE], size_t length, char const *password)
         ptr += sprintf(ptr, "%02x", buf[i]);
     }
 
-    if (strcmp(buf2, password) == 0){
+    if (strcmp(buf2, password) == 0)
+    {
         free(buf2);
         return 1;
     }
@@ -38,7 +45,7 @@ int CheckHash(BYTE buf[SHA256_BLOCK_SIZE], size_t length, char const *password)
 }
 
 int kWordsRecursive(char const *alphabet, char *prefix, char const *password,
-                       size_t alphabetLen, size_t passwordLen, size_t k)
+                    size_t alphabetLen, size_t passwordLen, size_t k)
 {
     if (k == 0)
     {
@@ -73,43 +80,70 @@ int kWordsRecursive(char const *alphabet, char *prefix, char const *password,
     return found;
 }
 
-const int bufsize = 256;
-
 int main()
 {
     double exec_time = 0.0;
     clock_t begin = clock();
 
     char alphabet[] = "abcdefghijklmnopqrstuwxyz0123456789";
-    
+
     char passwords[][65] = {"594e519ae499312b29433b7dd8a97ff068defcba9755b6d5d00e84c524d67b06",
                             "ade5880f369fd9765fb6cffdf67b5d4dfb2cf650a49c848a0ce7be1c10e80b23",
                             "83cf8b609de60036a8277bd0e96135751bbc07eb234256d4b65b893360651bf2",
                             "0d335a3bea76dac4e3926d91c52d5bdd716bac2b16db8caf3fb6b7a58cbd92a7"};
 
-
-    int len = strlen(alphabet);
+    int alphabetLength = strlen(alphabet);
 
     /* Use a buffer to avoid messing with malloc() in kWordsRecursive */
-    char prefix[bufsize];
-    memset(prefix, '\0', bufsize);
+    char prefix[BUFSIZE];
+    memset(prefix, '\0', BUFSIZE);
 
     size_t const alphalen = strlen(alphabet);
 
+    int found = 0;
+
+    /*find the longest password in the hashes
+    so we can save the execution time against it
+    The longest password is a more important variable than the amount
+    of passwords to crack for the execution time
+    */
+    size_t longestPasswordLen = 0;
+
     for (size_t k = 0; k < sizeof(passwords) / sizeof(passwords[0]); k++)
     {
-        for (int i = 0; i < len + 1; i++)
+        for (int i = 0; i < alphabetLength + 1; i++)
         {
             if (kWordsRecursive(alphabet, prefix, passwords[k], alphalen, i, i))
-                break;
-        }
+            {
+                if (SAVE_OUT)
+                {
+                    if (strlen(prefix) > longestPasswordLen)
+                        longestPasswordLen = strlen(prefix);
+                }
 
+                found = 1;
+                break;
+            }
+        }
     }
 
-    clock_t end = clock();
+    if (found)
+    {
+        clock_t end = clock();
 
-    exec_time += (double)(end - begin) / CLOCKS_PER_SEC;
+        exec_time += (double)(end - begin) / CLOCKS_PER_SEC;
 
-    printf("Execution time is %f seconds", exec_time); 
+        printf("Execution time: %f seconds\n", exec_time);
+        if (SAVE_OUT)
+        {
+            FILE *f = fopen("timings/BruteForceTiming.txt", "a");
+            if (f == NULL)
+            {
+                printf("Error opening file!\n");
+                exit(1);
+            }
 
+            fprintf(f, "%d:%f\n", longestPasswordLen, exec_time);
+        }
+    }
 }

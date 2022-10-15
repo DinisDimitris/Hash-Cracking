@@ -20,3 +20,5 @@ C-impl/dictcracker
 C-impl/DictHashCracker.o
 C-impl/dictcracker
 C-impl/dictcracker
+C-impl/saltcracker
+C-impl/SaltDictHashCracker.o
