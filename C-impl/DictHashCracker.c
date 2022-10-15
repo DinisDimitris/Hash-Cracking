@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h> 
 #include "sha256/sha256.h"
 #include "uthash/include/uthash.h"
 
@@ -49,6 +50,9 @@ void StoreHash(char *password, hashdict *item )
 
 int main()
 { 
+    double exec_time = 0.0;
+    clock_t begin = clock();
+
     FILE *textfile;
     char line[MAX_LINE_LENGTH];
     int k =0;
@@ -110,6 +114,12 @@ int main()
       HASH_DEL(dict, item);
       free(item);
     }
+
+    clock_t end = clock();
+
+    exec_time += (double)(end - begin) / CLOCKS_PER_SEC;
+
+    printf("Execution time is %f seconds", exec_time);
 
     return 0;
 }

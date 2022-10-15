@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "sha256/sha256.h"
 
 void PrintHex(BYTE buf[SHA256_BLOCK_SIZE])
@@ -76,6 +77,9 @@ const int bufsize = 256;
 
 int main()
 {
+    double exec_time = 0.0;
+    clock_t begin = clock();
+
     char alphabet[] = "abcdefghijklmnopqrstuwxyz0123456789";
     
     char passwords[][65] = {"594e519ae499312b29433b7dd8a97ff068defcba9755b6d5d00e84c524d67b06",
@@ -100,6 +104,12 @@ int main()
                 break;
         }
 
-    } 
+    }
+
+    clock_t end = clock();
+
+    exec_time += (double)(end - begin) / CLOCKS_PER_SEC;
+
+    printf("Execution time is %f seconds", exec_time); 
 
 }

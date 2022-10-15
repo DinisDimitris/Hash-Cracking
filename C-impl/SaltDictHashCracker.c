@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <string.h>
 #include "sha256/sha256.h"
 #include "uthash/include/uthash.h"
@@ -49,6 +50,9 @@ void StoreHashWithSalt(char *saltedPassword, char * password, hashdict *item)
 
 int main()
 {
+    double exec_time = 0.0;
+    clock_t begin = clock();
+
     char *saltedHashes[][80] = {{"915edb4d39ab6d260e3fb7269f5d9f8cfba3fdc998415298af3e6eb94a82e43e", "27fb57e9"},
                                 {"5ddce1dc316e7914ab6af64ef7c00d8b603fac32381db963d9359c3371a84b3a", "b7875b4b"},
                                 {"7e3b02bacd934245aa0cb3ea4d2b2f993a8681a650e38a63175374c28c4a7d0d", "ec13ab35"},
@@ -121,6 +125,12 @@ int main()
             printf("Could not find password for hash: %s\n", saltedHashes[k][0]);
         }
     }
+
+    clock_t end = clock();
+
+    exec_time += (double)(end - begin) / CLOCKS_PER_SEC;
+
+    printf("Execution time is %f seconds", exec_time); 
 
 
     HASH_ITER(hh, dict, item, tmp) {
