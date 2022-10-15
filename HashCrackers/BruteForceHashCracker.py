@@ -5,7 +5,7 @@ class BruteForceHashCracker(object):
 
     CHARS = 'abcdefghijklmnopqrstuvwxyz0123456789'
     #adjust permutation depth so that memory doesnt blow up if ran locally and hash is not found
-    PERMUTATION_DEPTH = 5
+    PERMUTATION_DEPTH = 20
 
     @staticmethod
     def words(letters):
@@ -22,6 +22,6 @@ class BruteForceHashCracker(object):
                 hash = h.hexdigest()
                 if (hash == hashToBeCracked):   
                     print("Hash: " + hashToBeCracked +  " has been cracked, password is: " + password)
-                    return
+                    return password
 
         print('Hash: ' + hashToBeCracked + ' could not be found for permutation depth = ' + str(BruteForceHashCracker.PERMUTATION_DEPTH))
