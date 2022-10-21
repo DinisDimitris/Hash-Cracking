@@ -25,4 +25,5 @@ If debugging is desired, you will have to add the debugging symbols when compili
 gcc -g {out_file} BruteForceHashCracking.o sha256/sha256.o
 
 The C implementation uses little endian byte order sha256, which can be found here:https://github.com/B-Con/crypto-algorithms/blob/master/sha256.c
+
 It also uses uthash for dictionaries: https://troydhanson.github.io/uthash/
