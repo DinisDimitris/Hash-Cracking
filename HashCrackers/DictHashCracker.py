@@ -11,6 +11,7 @@ class DictHashCracker():
 
         self._passwords = passwords
 
+    # Lookup a hash by index
     def LookupHash(self,hash):
         if (self._hashDict[hash] != ''):
             print('Password for hash: ' + hash +  ' is: ' + self._hashDict[hash])
@@ -18,7 +19,7 @@ class DictHashCracker():
             print('Password for hash: ' + hash +  ' is not present in the dictionary')
         return self._hashDict[hash]
         
-
+    # Store hashes
     def StoreHashes(self):
         for password in self._passwords:
             h = hashlib.new('sha256')

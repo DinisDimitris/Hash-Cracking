@@ -7,7 +7,7 @@
 
 #define MAX_LINE_LENGTH 100
 #define MAX_KEYS_AMOUNT 6940 /* size of PassworDictionary.txt */
-#define MAX_KEY_LENGTH 30    /* let each string have a size of max 20 characters */
+#define MAX_KEY_LENGTH 30    /* let each string have a size of max 30 characters */
 
 /* set to 1 if you wanna save exec time to txt
 first column is for the password list length and second for their respective time to crack*/
@@ -16,12 +16,13 @@ const int SAVE_OUT = 0;
 typedef struct hashdict
 {
     char key[65];      /* 65 bytes is hex string + end of string symbol */
-    char password[20]; /* we'll use this field as the key */
+    char password[20]; 
     UT_hash_handle hh; /* makes this structure hashable */
 } hashdict;
 
 hashdict *item, *dict, *tmp = NULL;
 
+// same with dict hash cracker, but hashes a salted password instead
 void StoreHashWithSalt(char *saltedPassword, char *password, hashdict *item)
 {
     size_t keylen = strlen(saltedPassword);
@@ -145,7 +146,7 @@ int main()
 
     exec_time += (double)(end - begin) / CLOCKS_PER_SEC;
 
-    printf("Execution time : %f seconds\n", exec_time);
+    printf("Execution time : %f ms\n", exec_time);
 
     if (SAVE_OUT)
     {

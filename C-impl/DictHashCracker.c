@@ -15,8 +15,8 @@ const int SAVE_OUT = 0;
 
 typedef struct hashdict
 {
-    char key[65];      /* we'll use this field as the key */
-    char password[20]; /* 65 bytes is hex string + end of string symbol */
+    char key[65];      /* we'll use this field as the key,  65 bytes is hex string + end of string symbol */ 
+    char password[20]; 
     UT_hash_handle hh; /* makes this structure hashable */
 } hashdict;
 
@@ -82,6 +82,7 @@ int main()
     for (size_t i = 0; i < (sizeof(keys) / sizeof(keys[0])); i++)
     {
         // printf("adding key %s\n", keys[i]); takes O(n)
+        // create new dict link for each password
         item = (hashdict *)malloc(sizeof(hashdict));
         if (item == NULL)
         {
@@ -139,7 +140,7 @@ int main()
 
     exec_time += (double)(end - begin) / CLOCKS_PER_SEC;
 
-    printf("Execution time: %f seconds\n", exec_time);
+    printf("Execution time: %f ms\n", exec_time);
     if (SAVE_OUT)
     {
         FILE *f = fopen("timings/DictCrackerTiming.txt", "a");

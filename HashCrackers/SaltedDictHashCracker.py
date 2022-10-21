@@ -11,6 +11,7 @@ class SaltedDictHashCracker():
 
         self._passwords = passwords
 
+    # lookup a salted hash 
     def LookupSaltedHash(self,hash):
         if (self._hashDict[hash] != ''):
             print('Password for hash: ' + hash +  ' is: ' + self._hashDict[hash][0])
@@ -18,6 +19,7 @@ class SaltedDictHashCracker():
             print('Password for hash: ' + hash +  ' is not present in the dictionary')
         return self._hashDict[hash]
 
+    # store each password with salt, resulting in permutation of each password with each salt
     def StorePasswordWithSalt(self, salt):
         for password in self._passwords:
             h = hashlib.new('sha256')

@@ -79,20 +79,21 @@ if __name__ == '__main__':
     end = time.time()
     saltDictAttackTime = end - start
 
-    print ("Execution time for brute force with max password size: {0} : {1}".format(longestPwLength, bruteForceExecTime))
-    print ("Execution time for dict attack with {0} hashes: {1}".format(len(dictHashes),dictAttackTime))
-    print ("Execution time for salted dict attack with {0} hashes: {1}".format(len (saltedHashes), saltDictAttackTime))
+    #save execution time
+    print ("Execution time for brute force with max password size: {0} : {1} ms ".format(longestPwLength, bruteForceExecTime))
+    print ("Execution time for dict attack with {0} hashes: {1} ms".format(len(dictHashes),dictAttackTime))
+    print ("Execution time for salted dict attack with {0} hashes: {1} ms".format(len (saltedHashes), saltDictAttackTime))
 
     if (SAVE_OUT):
-        f = open('pytimings/bruteforcecrack.txt', 'a')
+        f = open('analysis/pytimings/bruteforcecrack.txt', 'a')
         f.write('{0}:{1}\n'.format(longestPwLength, bruteForceExecTime))
         f.close()
         
-        y = open('pytimings/dictcrack.txt', 'a')
+        y = open('analysis/pytimings/dictcrack.txt', 'a')
         y.write('{0}:{1}\n'.format(len(dictHashes),dictAttackTime))
         y.close()
         
-        file_object = open('pytimings/salteddictcrack.txt', 'a')
+        file_object = open('analysis/pytimings/salteddictcrack.txt', 'a')
         file_object.write('{0}:{1}\n'.format(len (saltedHashes), saltDictAttackTime))
         file_object.close()
     
