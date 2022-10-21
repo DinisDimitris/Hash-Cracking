@@ -9,7 +9,7 @@ The hashlib-sha256 library has been used for hashing.
 For the C implementation, I have included a make file which will compile all 3 approaches. I did not want to chain any headers as gcc was already taking a param for sha256, therefore I kept all 3 executables separate. 
 
 To run the C implementation, cd into C-impl/ and run make. This will create a executable for each task, namely:
--bruteforce
+-bruteforce\n
 -dictcracker
 -saltcracker
 Each of these can be run as any executable (eg ./bruteforce)
