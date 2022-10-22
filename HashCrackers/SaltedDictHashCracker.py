@@ -3,13 +3,17 @@ import hashlib
 class SaltedDictHashCracker():
 
     _hashDict = {}
-    _passwords = []
 
-    def __init__(self, hashes, passwords):
-        for hash in hashes:
-            self._hashDict.update({hash : ''})
+    # store each password with salt, resulting in permutation of each password with each salt
+    def __init__(self, passwords, salts):
+        for password in passwords:
+            for salt in salts:
+                h = hashlib.new('sha256')
+                encoded = password.encode() + salt.encode() 
+                h.update(encoded)
+                hashedPw = h.hexdigest()
 
-        self._passwords = passwords
+                self._hashDict[hashedPw] = [password, salt]
 
     # lookup a salted hash 
     def LookupSaltedHash(self,hash):
@@ -18,16 +22,6 @@ class SaltedDictHashCracker():
         else:
             print('Password for hash: ' + hash +  ' is not present in the dictionary')
         return self._hashDict[hash]
-
-    # store each password with salt, resulting in permutation of each password with each salt
-    def StorePasswordWithSalt(self, salt):
-        for password in self._passwords:
-            h = hashlib.new('sha256')
-            encoded = password.encode() + salt.encode() 
-            h.update(encoded)
-            hashedPw = h.hexdigest()
-
-            self._hashDict[hashedPw] = [password, salt]
 
 
 

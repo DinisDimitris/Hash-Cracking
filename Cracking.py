@@ -4,7 +4,7 @@ from HashCrackers.SaltedDictHashCracker import SaltedDictHashCracker
 import time
 
 # set to 1 if you wanna save execution times to txt
-SAVE_OUT = 0
+SAVE_OUT = 1
 
 def Read(path):
         fileObj = open(path, "r")
@@ -32,11 +32,7 @@ if __name__ == '__main__':
 
     start = time.time()
     print ('\nDictionary attack\n ---------------------')
-    dictHashCracker = DictHashCracker(dictHashes, passwords)
-    
-
-    for dictHash in dictHashes:
-        dictHashCracker.StoreHashes()
+    dictHashCracker = DictHashCracker(passwords)
 
     for dictHash in dictHashes:
         dictHashCracker.LookupHash(dictHash)
@@ -67,11 +63,10 @@ if __name__ == '__main__':
     ("f04cb080072c7d4356abba5795fd43f6f0d75d8227f6abdfb322c27c3b7718e7", "017bb5b7")]
     
     hashes = [x[0] for x in saltedHashes]
+    salts = [x[1] for x in saltedHashes]
 
     start = time.time()
-    saltedHashCracker = SaltedDictHashCracker(hashes, passwords)
-    for saltedDictHash in saltedHashes:
-        saltedHashCracker.StorePasswordWithSalt(saltedDictHash[1])
+    saltedHashCracker = SaltedDictHashCracker(passwords, salts)
 
     for saltedDictHash in saltedHashes:
         saltedHashCracker.LookupSaltedHash(saltedDictHash[0])
