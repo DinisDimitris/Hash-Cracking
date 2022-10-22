@@ -4,7 +4,7 @@ from HashCrackers.SaltedDictHashCracker import SaltedDictHashCracker
 import time
 
 # set to 1 if you wanna save execution times to txt
-SAVE_OUT = 1
+SAVE_OUT = 0
 
 def Read(path):
         fileObj = open(path, "r")
