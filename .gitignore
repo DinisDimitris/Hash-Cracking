@@ -1,7 +1,4 @@
 C-impl/main
-C-impl/sha256
-C-impl/sha256_test.o
-C-impl/sha256.o
 C-impl/HashCrackers/main
 C-impl/HashCrackers/permute.o
 C-impl/HashCrackers/sha256/main

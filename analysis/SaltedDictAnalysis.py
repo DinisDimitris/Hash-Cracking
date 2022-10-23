@@ -25,7 +25,7 @@ plt.plot(x1,y1, color = 'g', label='c')
 
 plt.xlabel("Number of salted passwords")
 plt.ylabel("Running time (ms) ")
-plt.title("Dictionary attack")
+plt.title("Salted Dictionary attack")
 
 plt.legend()
 plt.show()
